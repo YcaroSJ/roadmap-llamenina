@@ -54,11 +54,11 @@ h2{font-size:24px;font-weight:600}
 
 /* Gantt */
 .gantt-scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-.gantt{min-width:820px;--cols:13;display:flex;flex-direction:column}
-.g-row{display:grid;grid-template-columns:220px repeat(13,minmax(46px,1fr));align-items:center;border-bottom:1px solid var(--line);position:relative}
+.gantt{min-width:820px;--cols:12;display:flex;flex-direction:column}
+.g-row{display:grid;grid-template-columns:220px repeat(12,minmax(50px,1fr));align-items:center;border-bottom:1px solid var(--line);position:relative}
 .g-row:last-child{border-bottom:0}
 .g-row::before{content:"";grid-column:2/-1;grid-row:1;align-self:stretch;
-  background:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/13 - 1px),var(--soft) calc(100%/13 - 1px),var(--soft) calc(100%/13))}
+  background:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/12 - 1px),var(--soft) calc(100%/12 - 1px),var(--soft) calc(100%/12))}
 .g-label{grid-column:1;grid-row:1;padding:10px 14px;font-size:13.5px;font-weight:500;line-height:1.3}
 .g-label small{display:block;font-weight:400;color:var(--muted);font-size:12px}
 .g-bar{grid-row:1;align-self:center;margin-block:9px;height:26px;border-radius:5px;color:var(--on-phase);font-size:12px;font-weight:500;display:flex;align-items:center;padding-inline:9px;white-space:nowrap;overflow:hidden;z-index:1}
@@ -94,6 +94,9 @@ h2{font-size:24px;font-weight:600}
 .tasks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14px}
 .tasks input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent);flex:none}
 .tasks input:checked + span{color:var(--muted);text-decoration:line-through}
+.tasks strong{font-weight:600;display:block}
+.tasks em{display:block;font-style:normal;color:var(--muted);font-size:12.5px;line-height:1.4;margin-top:1px}
+.tasks input:checked + span strong{font-weight:500}
 .tasks input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .done{margin-top:auto;padding:10px 12px;border-radius:7px;background:var(--soft);font-size:13.5px}
 .done b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;font-weight:500}
@@ -149,23 +152,25 @@ footer{font-size:12.5px;color:var(--muted)}
 <header>
   <div class="eyebrow">Llamenina · Análise de Dados</div>
   <h1>Roadmap de Dados</h1>
-  <p class="lede">De vendas, faturamento, NFs, estoque e devoluções em planilhas soltas para um repositório único, com dashboards que se atualizam sozinhos. 13 semanas, começando em 21/09/2026.</p>
+  <p class="lede">De vendas, faturamento, NFs, estoque e devoluções em planilhas soltas para um repositório único, com dashboards que se atualizam sozinhos. 12 semanas, começando em 01/10/2026, sem custo de infraestrutura.</p>
   <div class="meta">
     <span class="chip">Fontes: Wiki (ERP) + CRM interno</span>
-    <span class="chip">Ferramentas: Excel · Sheets · Lovable · Supabase</span>
-    <span class="chip">Entrega final: 20/12/2026</span>
+    <span class="chip">Ferramentas: Excel · Sheets · Lovable · Supabase Free</span>
+    <span class="chip">Início: 01/10/2026</span>
+    <span class="chip">Entrega final: 23/12/2026</span>
+    <span class="chip">Custo: R$ 0</span>
   </div>
   <div class="progress" aria-live="polite"><span id="pTxt">0 de 0 tarefas</span><div class="bar"><i id="pBar"></i></div></div>
 </header>
 
 <section>
-  <div class="sec-head"><h2>Cronograma</h2><p>13 semanas, de 21/09 a 20/12. Role para o lado no celular.</p></div>
+  <div class="sec-head"><h2>Cronograma</h2><p>12 semanas, de 01/10 a 23/12. Role para o lado no celular.</p></div>
   <div class="gantt-scroll"><div class="gantt">
     <div class="g-row g-head months">
       <div class="g-label">Mês</div>
-      <div class="g-cell" style="grid-column:2/6">Mês 1 · Set–Out</div>
+      <div class="g-cell" style="grid-column:2/6">Mês 1 · Outubro</div>
       <div class="g-cell" style="grid-column:6/10">Mês 2 · Out–Nov</div>
-      <div class="g-cell" style="grid-column:10/15;border-right:0">Mês 3 · Nov–Dez</div>
+      <div class="g-cell" style="grid-column:10/14;border-right:0">Mês 3 · Nov–Dez</div>
     </div>
     <div class="g-row g-head" id="weeks"><div class="g-label"></div></div>
 
@@ -173,16 +178,16 @@ footer{font-size:12.5px;color:var(--muted)}
     <div class="g-row"><div class="g-label">Dicionário de métricas<small>Fase 0</small></div><div class="g-bar c0" style="grid-column:2/4">Fechar com a gestão</div></div>
     <div class="g-row"><div class="g-label">Excel + Power Query<small>Fase 1</small></div><div class="g-bar c1" style="grid-column:3/6">Consolidar exportações</div></div>
     <div class="g-row"><div class="g-label">Protótipo no Lovable<small>Fase 1</small></div><div class="g-bar c1" style="grid-column:4/6">Com CSVs</div></div>
-    <div class="g-row"><div class="g-label">Ingestão automática<small>Fase 2</small></div><div class="g-bar c2" style="grid-column:6/10">Wiki/CRM → Supabase</div></div>
+    <div class="g-row"><div class="g-label">Ingestão automática<small>Fase 2</small></div><div class="g-bar c2" style="grid-column:6/10">Wiki/CRM → Supabase Free</div></div>
     <div class="g-row"><div class="g-label">Dashboards finais<small>Fase 3</small></div><div class="g-bar c3" style="grid-column:10/14">Vendas · Estoque · NFs · Devoluções</div></div>
-    <div class="g-row"><div class="g-label">Segurança<small>RLS · login · revisão final</small></div><div class="g-bar cx" style="grid-column:6/15">Ativar antes do 1º dado real, revisar no fim</div></div>
-    <div class="g-row"><div class="g-label">Rotina semanal<small>Seg · Qua · Sex</small></div><div class="g-bar cx thin" style="grid-column:3/15"></div></div>
+    <div class="g-row"><div class="g-label">Segurança e backup<small>RLS · login · backup semanal</small></div><div class="g-bar cx" style="grid-column:6/14">Ativar antes do 1º dado real, revisar no fim</div></div>
+    <div class="g-row"><div class="g-label">Rotina semanal<small>Seg · Qua · Sex</small></div><div class="g-bar cx thin" style="grid-column:3/14"></div></div>
     <div class="g-row g-ms">
       <div class="g-label">Marcos</div>
       <div class="ms l" style="grid-column:2"><span>Mapa de dados e métricas</span></div>
       <div class="ms" style="grid-column:5"><span>1º relatório entregue</span></div>
       <div class="ms" style="grid-column:9"><span>Dados chegam sozinhos</span></div>
-      <div class="ms r" style="grid-column:14"><span>Dashboards no ar</span></div>
+      <div class="ms r" style="grid-column:13"><span>Dashboards no ar</span></div>
     </div>
   </div></div>
   <div class="legend">
@@ -195,16 +200,16 @@ footer{font-size:12.5px;color:var(--muted)}
   <div class="phases">
 
     <article class="phase p0">
-      <div class="ph-top"><span class="ph-tag">Fase 0</span><h3>Descoberta</h3><span class="ph-when">Semana 1 · 21/09 a 27/09</span></div>
+      <div class="ph-top"><span class="ph-tag">Fase 0</span><h3>Descoberta</h3><span class="ph-when">Semana 1 · 01/10 a 07/10</span></div>
       <div class="ph-body">
         <ul class="tasks">
-          <li><label><input type="checkbox" data-k="a1"><span>Qual banco o Wiki usa? Dá para ter usuário somente leitura?</span></label></li>
-          <li><label><input type="checkbox" data-k="a2"><span>CRM: tem banco ou API? Quem mantém?</span></label></li>
-          <li><label><input type="checkbox" data-k="a3"><span>Existe exportação agendada hoje?</span></label></li>
-          <li><label><input type="checkbox" data-k="a4"><span>De onde vêm as NFs: Wiki, emissor separado ou contador?</span></label></li>
-          <li><label><input type="checkbox" data-k="a5"><span>Confirmar uso de Lovable e Supabase e a posição sobre LGPD</span></label></li>
-          <li><label><input type="checkbox" data-k="a6"><span>Mapa de dados e chave que liga Wiki e CRM (CNPJ, nº do pedido, nº da NF)</span></label></li>
-          <li><label><input type="checkbox" data-k="a7"><span>Comparar o total de vendas do mês passado com o financeiro</span></label></li>
+          <li><label><input type="checkbox" data-k="a1"><span><strong>Descobrir como extrair os dados do Wiki</strong><em>Banco usado, usuário somente leitura, exportação agendada. Define se dá para automatizar ou se fica manual.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a2"><span><strong>Descobrir como extrair os dados do CRM</strong><em>Banco ou API, e quem mantém. Vendas e clientes moram aqui.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a3"><span><strong>Descobrir de onde vêm as NFs</strong><em>Wiki, emissor separado ou contador. Sem isso não existe conciliação de faturamento.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a4"><span><strong>Definir a chave que liga Wiki e CRM</strong><em>CNPJ, nº do pedido ou nº da NF. Sem chave comum não há relatório cruzado.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a5"><span><strong>Fechar o dicionário de métricas com a gestão</strong><em>Uma definição por número, para ninguém discutir o dado na reunião.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a6"><span><strong>Conferir o total de vendas do mês passado com o financeiro</strong><em>Prova que você está lendo os dados certos antes de construir qualquer coisa.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a7"><span><strong>Alinhar com TI e diretoria o uso de ferramentas externas e LGPD</strong><em>Evita ter que refazer tudo depois de um veto.</em></span></label></li>
         </ul>
         <div class="sub"><b>Dicionário de métricas a decidir</b>
           <dl><dt>Faturamento</dt><dd>NF emitida ou pedido? Bruto ou líquido de devoluções?</dd>
@@ -215,22 +220,21 @@ footer{font-size:12.5px;color:var(--muted)}
     </article>
 
     <article class="phase p1">
-      <div class="ph-top"><span class="ph-tag">Fase 1</span><h3>Manual e organizado</h3><span class="ph-when">Semanas 2 a 4 · 28/09 a 18/10</span></div>
+      <div class="ph-top"><span class="ph-tag">Fase 1</span><h3>Manual e organizado</h3><span class="ph-when">Semanas 2 a 4 · 08/10 a 28/10</span></div>
       <div class="ph-body">
         <ul class="tasks">
-          <li><label><input type="checkbox" data-k="b1"><span>Exportar vendas e estoque do Wiki e do CRM em CSV/Excel</span></label></li>
-          <li><label><input type="checkbox" data-k="b2"><span>Guardar originais em <code>/dados_brutos/AAAA-MM/</code>, sem editar</span></label></li>
-          <li><label><input type="checkbox" data-k="b3"><span>Consolidar no Excel com Power Query (só clicar em Atualizar)</span></label></li>
-          <li><label><input type="checkbox" data-k="b4"><span>1º relatório: faturamento por mês, top produtos, top clientes, entradas e saídas</span></label></li>
-          <li><label><input type="checkbox" data-k="b5"><span>Protótipo no Lovable com os CSVs para a diretoria validar</span></label></li>
-          <li><label><input type="checkbox" data-k="b6"><span>Listar problemas de dado (duplicados, SKUs inconsistentes) para corrigir na origem</span></label></li>
+          <li><label><input type="checkbox" data-k="b1"><span><strong>Exportar vendas, itens, estoque e devoluções do Wiki e do CRM</strong><em>Guarde os originais em /dados_brutos/AAAA-MM/, sem editar. É a base de todo o resto.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="b2"><span><strong>Consolidar tudo no Excel com Power Query</strong><em>Processo repetível: no mês seguinte é só clicar em Atualizar.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="b3"><span><strong>Entregar o 1º relatório</strong><em>Faturamento por mês, top produtos, top clientes, entradas e saídas. É a primeira entrega de valor e o teste de que os números batem.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="b4"><span><strong>Prototipar no Lovable com os CSVs e validar com a diretoria</strong><em>Descobre o que eles realmente querem ver antes de gastar tempo automatizando.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="b5"><span><strong>Listar os problemas de dado</strong><em>Duplicados, SKUs inconsistentes, cadastros incompletos. Vira a lista de correção na origem.</em></span></label></li>
         </ul>
         <div class="done"><b>Pronto quando</b>A diretoria validou o protótipo e os números batem com o financeiro.</div>
       </div>
     </article>
 
     <article class="phase p2">
-      <div class="ph-top"><span class="ph-tag">Fase 2</span><h3>Automação</h3><span class="ph-when">Semanas 5 a 8 · 19/10 a 15/11</span></div>
+      <div class="ph-top"><span class="ph-tag">Fase 2</span><h3>Automação</h3><span class="ph-when">Semanas 5 a 8 · 29/10 a 25/11</span></div>
       <div class="ph-body">
         <div class="scen">
           <div><strong>Acesso SQL</strong><span>Consulta agendada copia os dados para o Supabase</span></div>
@@ -238,24 +242,26 @@ footer{font-size:12.5px;color:var(--muted)}
           <div><strong>Só exportação</strong><span>Exportação agendada + script que consolida a pasta</span></div>
         </div>
         <ul class="tasks">
-          <li><label><input type="checkbox" data-k="c1"><span>Criar projeto Supabase Pro (US$ 25/mês) em conta da empresa</span></label></li>
-          <li><label><input type="checkbox" data-k="c2"><span>Ativar RLS e login antes de subir o primeiro dado</span></label></li>
-          <li><label><input type="checkbox" data-k="c3"><span>Ingestão diária Wiki/CRM → Supabase, nunca direto no banco de produção</span></label></li>
-          <li><label><input type="checkbox" data-k="c4"><span>Conferência automática dos totais contra o financeiro</span></label></li>
+          <li><label><input type="checkbox" data-k="c1"><span><strong>Criar o Supabase Free em conta da empresa</strong><em>Custo zero, e o banco fica sob controle da empresa, não de um e-mail pessoal.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="c2"><span><strong>Ativar RLS e login antes do primeiro dado</strong><em>É isso que mantém o banco privado. Testar com um usuário sem permissão.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="c3"><span><strong>Automatizar a ingestão diária Wiki/CRM para o Supabase</strong><em>Sem tocar no banco de produção. Como roda todo dia, também evita que o plano gratuito pause por inatividade.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="c4"><span><strong>Fazer backup semanal das tabelas para o Drive</strong><em>O plano gratuito não tem backup automático. Sem isso, um erro vira perda de dado.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="c5"><span><strong>Conferir os totais automaticamente contra o financeiro</strong><em>Alerta de divergência antes de a diretoria ver o número errado.</em></span></label></li>
         </ul>
-        <div class="done"><b>Pronto quando</b>Os dados chegam sozinhos todo dia e batem com a fonte.</div>
+        <div class="done"><b>Pronto quando</b>Os dados chegam sozinhos todo dia, o backup roda e os totais batem com a fonte.</div>
       </div>
     </article>
 
     <article class="phase p3">
-      <div class="ph-top"><span class="ph-tag">Fase 3</span><h3>Dashboards e rotina</h3><span class="ph-when">Semanas 9 a 13 · 16/11 a 20/12</span></div>
+      <div class="ph-top"><span class="ph-tag">Fase 3</span><h3>Dashboards e rotina</h3><span class="ph-when">Semanas 9 a 12 · 26/11 a 23/12</span></div>
       <div class="ph-body">
         <ul class="tasks">
-          <li><label><input type="checkbox" data-k="d1"><span>Dashboards finais no Lovable: vendas, estoque, NFs e devoluções</span></label></li>
-          <li><label><input type="checkbox" data-k="d2"><span>Conciliação de NFs com vendas, mostrando divergências</span></label></li>
-          <li><label><input type="checkbox" data-k="d3"><span>Perfis de acesso: diretoria vê tudo, vendedor vê a própria carteira</span></label></li>
-          <li><label><input type="checkbox" data-k="d4"><span>Revisão final de segurança (checklist abaixo)</span></label></li>
-          <li><label><input type="checkbox" data-k="d5"><span>Rotina semanal rodando e resumo de sexta enviado à gestão</span></label></li>
+          <li><label><input type="checkbox" data-k="d1"><span><strong>Dashboard de vendas e faturamento</strong><em>Prioridade 1 da diretoria: período, produto, coleção, cliente, vendedor e canal, com comparativo mês e ano.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="d2"><span><strong>Dashboard de estoque</strong><em>Entradas, saídas, saldo, giro e produtos parados. Prioridade 2 da diretoria.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="d3"><span><strong>Conciliação de NFs com vendas</strong><em>Mostra divergências e notas canceladas. Pega erro de faturamento cedo.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="d4"><span><strong>Relatório de devoluções</strong><em>Taxa por produto, cliente e motivo. Mostra onde a margem está vazando.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="d5"><span><strong>Perfis de acesso</strong><em>Diretoria vê tudo, vendedor só a própria carteira. Privacidade e adoção.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="d6"><span><strong>Revisão final de segurança e rotina semanal rodando</strong><em>Fecha o checklist e deixa a operação funcionando sem depender de você.</em></span></label></li>
         </ul>
         <div class="done"><b>Pronto quando</b>A gestão consulta sozinha, sem depender de você para gerar planilha.</div>
       </div>
@@ -270,7 +276,7 @@ footer{font-size:12.5px;color:var(--muted)}
     <div class="arrow"></div>
     <div class="node"><span class="k">Ingestão</span><strong>Rotina diária</strong><span>Consulta, API ou script conforme a Fase 0.</span></div>
     <div class="arrow"></div>
-    <div class="node hl"><span class="k">Repositório</span><strong>Supabase Pro</strong><span>Postgres com RLS, backup diário, sem pausa.</span></div>
+    <div class="node hl"><span class="k">Repositório</span><strong>Supabase Free</strong><span>Postgres com RLS. 500 MB e sem backup automático, por isso o backup semanal.</span></div>
     <div class="arrow"></div>
     <div class="node"><span class="k">Visualização</span><strong>App no Lovable</strong><span>Dashboards com login e filtros.</span></div>
   </div>
@@ -295,17 +301,25 @@ footer{font-size:12.5px;color:var(--muted)}
   <div class="panel">
     <h3>Segurança antes de subir dado real</h3>
     <ul class="tasks">
-      <li><label><input type="checkbox" data-k="s1"><span>Supabase Pro, não o gratuito (pausa após 1 semana e não tem backup)</span></label></li>
-      <li><label><input type="checkbox" data-k="s2"><span>RLS ativado em todas as tabelas, testado com usuário sem permissão</span></label></li>
-      <li><label><input type="checkbox" data-k="s3"><span>Login obrigatório com e-mail corporativo</span></label></li>
-      <li><label><input type="checkbox" data-k="s4"><span>Chave <code>service_role</code> nunca no front-end</span></label></li>
-      <li><label><input type="checkbox" data-k="s5"><span>Sem CPF, telefone ou endereço de cliente na 1ª versão</span></label></li>
-      <li><label><input type="checkbox" data-k="s6"><span>Nunca conectar direto ao banco de produção do Wiki</span></label></li>
-      <li><label><input type="checkbox" data-k="s7"><span>Aval de TI ou diretoria (LGPD)</span></label></li>
-      <li><label><input type="checkbox" data-k="s8"><span>Conferir Advisors &gt; Security no painel do Supabase</span></label></li>
+          <li><label><input type="checkbox" data-k="s1"><span><strong>Ingestão diária ligada e backup semanal no Drive</strong><em>Substitui o backup e a proteção contra pausa do plano pago.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s2"><span><strong>RLS ativado em todas as tabelas, testado com usuário sem permissão</strong><em>Sem RLS o dado fica exposto a quem tiver a chave pública.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s3"><span><strong>Login obrigatório com e-mail corporativo</strong><em>Só quem trabalha na empresa entra.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s4"><span><strong>Chave service_role nunca no front-end</strong><em>Ela ignora todas as regras de acesso.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s5"><span><strong>Sem CPF, telefone ou endereço de cliente na 1ª versão</strong><em>Menos dado sensível, menos risco de LGPD.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s6"><span><strong>Nunca conectar direto ao banco de produção do Wiki</strong><em>Um erro de consulta não pode derrubar o ERP.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s7"><span><strong>Aval de TI ou diretoria (LGPD)</strong><em>Registra que a empresa sabe onde os dados estão.</em></span></label></li>
+          <li><label><input type="checkbox" data-k="s8"><span><strong>Conferir Advisors &gt; Security no painel do Supabase</strong><em>Ele avisa quando uma tabela está sem proteção.</em></span></label></li>
     </ul>
   </div>
   <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="panel">
+      <h3>Custo e plano B</h3>
+      <div class="rot">
+        <div><b>Hoje: R$ 0</b><span>Excel, Google Sheets, Supabase Free e Drive. Confira o plano do Lovable para o volume de uso.</span></div>
+        <div><b>Se passar de 500 MB</b><span>Guardar dados agregados por dia, ou migrar para o Supabase Pro (US$ 25/mês).</span></div>
+        <div><b>Plano B gratuito</b><span>Google Sheets como repositório e Looker Studio nos dashboards, sem Supabase e sem Lovable.</span></div>
+      </div>
+    </div>
     <div class="panel">
       <h3>Rotina semanal</h3>
       <div class="rot">
@@ -316,9 +330,9 @@ footer{font-size:12.5px;color:var(--muted)}
       </div>
     </div>
     <div class="panel">
-      <h3>Primeiros passos amanhã</h3>
+      <h3>Primeiros passos em 01/10</h3>
       <ol class="steps">
-        <li>Marcar conversa com a TI ou fornecedor do Wiki com a lista da Fase 0</li>
+        <li>Conversar com a TI ou fornecedor do Wiki e do CRM sobre como extrair os dados</li>
         <li>Pedir 30 minutos à gestão para validar o dicionário de métricas</li>
         <li>Exportar uma amostra de vendas do último mês de cada sistema e comparar com o financeiro</li>
       </ol>
@@ -332,14 +346,14 @@ footer{font-size:12.5px;color:var(--muted)}
 <script>
 (function(){
   // semanas do cabeçalho do Gantt
-  var starts=['21/9','28/9','5/10','12/10','19/10','26/10','2/11','9/11','16/11','23/11','30/11','7/12','14/12'];
+  var starts=['1/10','8/10','15/10','22/10','29/10','5/11','12/11','19/11','26/11','3/12','10/12','17/12'];
   var w=document.getElementById('weeks');
   starts.forEach(function(d,i){
     var c=document.createElement('div');c.className='g-cell';c.style.gridColumn=String(i+2);
     c.innerHTML='<b>S'+(i+1)+'</b>'+d;w.appendChild(c);
   });
   // progresso das tarefas (conveniência por navegador)
-  var KEY='llamenina-roadmap-v1',saved={};
+  var KEY='llamenina-roadmap-v2',saved={};
   try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
   var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-k]'));
   function upd(){
