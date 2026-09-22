@@ -146,6 +146,25 @@ td.src{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);white-space
 .steps li::before{content:counter(s);flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--surface);font-family:var(--f-mono);font-size:12px;display:grid;place-items:center;margin-top:1px}
 footer{font-size:12.5px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.progress .bar i{transition:none}}
+
+/* Area picker */
+.area-picker{display:flex;flex-direction:column;gap:8px}
+.area-picker .lbl{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.area-chips{display:flex;flex-wrap:wrap;gap:8px}
+.a-chip{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:999px;color:var(--ink);cursor:pointer}
+.a-chip:hover{border-color:var(--accent)}
+.a-chip.active{background:var(--accent);border-color:var(--accent);color:var(--on-phase)}
+.area-panel{display:none;background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:18px 20px;flex-direction:column;gap:12px}
+.area-panel.open{display:flex}
+.area-panel .ap-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+.area-panel h3{font-size:19px}
+.area-panel .when{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.area-panel .close{font-family:var(--f-mono);font-size:12px;color:var(--muted);background:none;border:0;cursor:pointer;text-decoration:underline;padding:0}
+.area-panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.area-panel li.pop{color:var(--ink)}
+.area-panel li.pop b{color:var(--accent);font-weight:600}
+.area-panel .depois{border-left:3px solid var(--accent);padding-left:12px;font-size:13.5px;color:var(--muted)}
+.area-panel .depois b{color:var(--ink);font-weight:600}
 </style>
 
 <div class="wrap">
@@ -161,6 +180,11 @@ footer{font-size:12.5px;color:var(--muted)}
     <span class="chip">Custo: R$ 0</span>
   </div>
   <div class="progress" aria-live="polite"><span id="pTxt">0 de 0 tarefas</span><div class="bar"><i id="pBar"></i></div></div>
+  <div class="area-picker">
+    <span class="lbl">Sua área — clique para ver o que fazer, em qual fase e quando</span>
+    <div class="area-chips" id="areaChips"></div>
+  </div>
+  <div class="area-panel" id="areaPanel"></div>
 </header>
 
 <section>
@@ -359,6 +383,130 @@ footer{font-size:12.5px;color:var(--muted)}
     var c=document.createElement('div');c.className='g-cell';c.style.gridColumn=String(i+2);
     c.innerHTML='<b>S'+(i+1)+'</b>'+d;w.appendChild(c);
   });
+  // seletor de área: o que fazer, em que fase e quando
+  var AREAS={
+    comercial:{nome:'Comercial',quando:'Fase 0 · Semana 1 · dias 1 a 3 (01, 02 e 05/10)',itens:[
+      'Mapear onde ficam os pedidos e itens de venda (sistema, tabela ou planilha).',
+      'Levantar o cadastro de clientes e como varejo e atacado são diferenciados.',
+      'Confirmar se dá para puxar grade (tamanho/cor) por SKU nos pedidos.',
+      'Levantar metas de venda por vendedor/representante.',
+      'Mapear pedidos em aberto, cancelados e prazo/condição de pagamento do atacado.',
+      'Levantar endereço dos clientes e cruzar com população por cidade (IBGE).',
+      "Definir 'cliente inativo' e montar relatório de recência.",
+      'Montar relatório de evolução de pedidos por cliente.',
+      'Cruzar vendas por SKU com estoque para achar produto parado (curva C/D).',
+      'Levantar a regra atual de exclusividade comercial (região, cliente ou produto).',
+      'Definir a lista de CNAEs aceitos para o atacado.',
+      'Avaliar geocodificar clientes, base para regra de distância entre revendedores.',
+      'Confirmar se existe API de WhatsApp para aviso de reposição de estoque.',
+      'POP: cadastro de cliente (dados obrigatórios, varejo x atacado).',
+      'POP: lançamento de pedido (o que preencher, desconto, cancelamento).'
+    ],depois:'Fase 1: entra no 1º relatório (top produtos e clientes). Fase 3: base do dashboard de vendas e faturamento — prioridade 1 — com filtro por vendedor e canal.'},
+    estoque:{nome:'Estoque',quando:'Fase 0 · Semana 1 · dias 4 e 5 (06 e 07/10)',itens:[
+      'Confirmar se o Wiki controla saldo por SKU e grade, ou só por produto.',
+      'Levantar como são registradas entradas, saídas e transferências.',
+      'Verificar se existe registro de inventário e histórico de divergências.',
+      'Mapear se há registro de avarias.',
+      'POP: contagem de inventário (periodicidade, registro de divergência).',
+      'POP: registro de entrada/saída/transferência (quem lança, com que documento).',
+      'POP: registro de avaria (motivo padronizado, quem autoriza a baixa).'
+    ],depois:'Fase 1: entra no relatório de entradas e saídas. Fase 3: dashboard de estoque — saldo, giro e produtos parados, prioridade 2.'},
+    producao:{nome:'Produção',quando:'Fase 0 · Semana 2 · dias 6 e 7 (08 e 09/10)',itens:[
+      'Levantar como o Wiki registra ordens de produção (datas prevista e real).',
+      'Mapear se há controle por etapa (corte, costura, acabamento).',
+      'Verificar se existe custo padrão x custo real por peça.',
+      'Levantar dado de refugo, retrabalho e aproveitamento de tecido.',
+      'Confirmar se produção própria e facção terceirizada ficam separadas.',
+      'POP: abertura de ordem de produção.',
+      'POP: apontamento por etapa (quem registra início/fim).',
+      'POP: registro de refugo e retrabalho.'
+    ],depois:'Alimenta o custo por peça, base dos indicadores de moda (margem por produto, prioridade 5) e da comparação custo padrão x real.'},
+    fiscal:{nome:'Fiscal',quando:'Fase 0 · Semana 2 · dia 8 (12/10)',itens:[
+      'Confirmar se as NFs (venda, devolução, transferência) saem do Wiki ou de outro emissor.',
+      'Levantar como a NF se liga ao número do pedido.',
+      'Verificar se há registro de NFs canceladas.',
+      'POP: emissão e cancelamento de NF.'
+    ],depois:'Fase 3: conciliação de NFs com vendas, prioridade 3 — mostra divergência e nota cancelada.'},
+    financeiro:{nome:'Financeiro',quando:'Fase 0 · Semana 2 · dia 9 (13/10)',itens:[
+      'Levantar onde ficam contas a receber, a pagar e o fluxo de caixa.',
+      'Confirmar se existe DRE e com que frequência é fechado.',
+      'Mapear como as comissões são calculadas e registradas.',
+      'Verificar formas de pagamento aceitas.',
+      'POP: lançamento de contas a pagar/receber (centro de custo, categoria, prazo).'
+    ],depois:'Fase 2: conferência automática dos totais do dashboard contra o financeiro, toda semana. É a prova dos nove de todo o roadmap.'},
+    compras:{nome:'Compras',quando:'Fase 0 · Semana 2 · dia 10 (14/10)',itens:[
+      'Levantar cadastro de fornecedores e histórico de preços.',
+      'Mapear onde ficam os pedidos de compra e prazos de entrega.',
+      'Verificar se há registro de qualidade do material recebido.',
+      'POP: cadastro de fornecedor e pedido de compra.',
+      'POP: conferência de recebimento (atraso ou problema de qualidade).'
+    ],depois:'Entra na base de custo (preço de fornecedor) usada nos indicadores de moda e na conferência de recebimento.'},
+    produto:{nome:'Produto e coleção',quando:'Fase 0 · Semana 3 · dia 11 (15/10)',itens:[
+      'Levantar se existe ficha técnica por produto (tecido, consumo, aviamentos).',
+      'Confirmar se o custo por peça está calculado em algum lugar.',
+      'Mapear como as coleções são identificadas (código, temporada).',
+      'POP: cadastro de ficha técnica.',
+      'POP: criação de código de coleção/SKU.'
+    ],depois:'A ficha técnica e o código de coleção viram a base de SKU/grade usada em todos os relatórios de venda e estoque.'},
+    logistica:{nome:'Logística',quando:'Fase 0 · Semana 3 · dia 12 (16/10)',itens:[
+      'Mapear como é registrado o prazo de separação e envio dos pedidos.',
+      'Levantar custo de frete por pedido e por transportadora.',
+      'Verificar se há registro de atrasos e extravios.',
+      'POP: separação e expedição (checklist antes do envio).',
+      'POP: registro de atraso/extravio.'
+    ],depois:'Custo de frete e atraso entram nos indicadores de moda e no relatório de pós-venda (prazo x reclamação).'},
+    posvenda:{nome:'Pós-venda',quando:'Fase 0 · Semana 3 · dia 13 (19/10)',itens:[
+      'Confirmar onde ficam registradas devoluções e trocas, com motivo.',
+      'Levantar se existe canal de reclamação ou avaliação do cliente.',
+      'POP: registro de devolução/troca (motivo padronizado, quem autoriza).'
+    ],depois:'Fase 3: relatório de devoluções — taxa por produto, cliente e motivo, prioridade 4.'},
+    rh:{nome:'RH',quando:'Fase 0 · Semana 3 · dia 14 (20/10)',itens:[
+      'Levantar headcount por setor e custo de mão de obra da produção.',
+      'Verificar se há registro de horas trabalhadas e absenteísmo.',
+      'POP: registro de ponto e ausência, se ainda não for automático.'
+    ],depois:'Custo de mão de obra entra no custo por peça, usado nos indicadores de moda (margem por produto).'},
+    marketing:{nome:'Marketing',quando:'Fase 0 · Semana 3 · dia 15 (21/10)',itens:[
+      'Listar os canais usados hoje (Meta, Google, e-commerce, redes sociais).',
+      'Levantar acesso aos painéis de cada canal (investimento, cliques, leads).',
+      'Verificar se o e-commerce rastreia a origem do pedido.',
+      'Mapear como identificar, no pedido, de onde veio o cliente.',
+      'POP: registro de campanha (nome padronizado, canal, investimento, datas).'
+    ],depois:'Canal e origem do pedido entram como filtro no dashboard de vendas (Fase 3) e ajudam a medir retorno por canal.'},
+    transversal:{nome:'Transversal',quando:'Fase 0 · Semana 4 · dia 16 (22/10)',itens:[
+      'Definir as chaves de ligação: SKU, nº do pedido, nº da NF, CPF/CNPJ, código de coleção, nº da ordem de produção.',
+      'Para cada área, anotar: sistema de origem, responsável, se dá para exportar ou só consultar.',
+      'Consolidar todos os POPs em um só lugar, com dono e data de revisão.',
+      'Revisar os POPs com quem executa a tarefa antes de aprovar.'
+    ],depois:'Sem isso as demais áreas não se conectam: é o que liga pedido, estoque, produção e NF num único relatório nas Fases 1 a 3.'},
+    fechamento:{nome:'Fechamento',quando:'Fase 0 · Semana 4 · dia 17 (23/10)',itens:[
+      'Fechar o dicionário de métricas com a gestão (o que é venda, faturamento, devolução).',
+      'Conferir o total de vendas do mês passado com o financeiro.',
+      'Resumir o que foi mapeado, o que falta, e o que é sistema/automação (não coleta de dado) — reposição automática por WhatsApp, bloqueio de atacado por CNAE, bloqueio de revendedor por distância — para levar a quem decide o escopo.'
+    ],depois:'Fecha a Fase 0 e libera as Fases 1 a 3: sem o dicionário de métricas fechado, cada relatório usaria uma definição diferente de venda e faturamento.'}
+  };
+  var chipsEl=document.getElementById('areaChips'),panelEl=document.getElementById('areaPanel'),openKey=null;
+  Object.keys(AREAS).forEach(function(k){
+    var b=document.createElement('button');b.type='button';b.className='a-chip';b.dataset.a=k;b.textContent=AREAS[k].nome;
+    b.addEventListener('click',function(){openKey=(openKey===k)?null:k;render();});
+    chipsEl.appendChild(b);
+  });
+  function render(){
+    [].slice.call(chipsEl.children).forEach(function(b){b.classList.toggle('active',b.dataset.a===openKey)});
+    if(!openKey){panelEl.className='area-panel';panelEl.innerHTML='';return;}
+    var a=AREAS[openKey];
+    var lis=a.itens.map(function(t){
+      var isPop=t.indexOf('POP:')===0;
+      return '<li'+(isPop?' class="pop"':'')+'>'+(isPop?'<b>POP —</b> '+t.slice(5):t)+'</li>';
+    }).join('');
+    panelEl.innerHTML='<div class="ap-top"><h3>'+a.nome+'</h3><span class="when">'+a.quando+'</span></div>'+
+      '<ul>'+lis+'</ul>'+
+      '<div class="depois"><b>Nas fases seguintes:</b> '+a.depois+'</div>'+
+      '<button type="button" class="close" id="areaClose">Fechar</button>';
+    panelEl.className='area-panel open';
+    document.getElementById('areaClose').addEventListener('click',function(){openKey=null;render();});
+  }
+  render();
+
   // progresso das tarefas (conveniência por navegador)
   var KEY='llamenina-roadmap-v3',saved={};
   try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
@@ -379,4 +527,3 @@ footer{font-size:12.5px;color:var(--muted)}
   upd();
 })();
 </script>
-</html>
