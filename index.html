@@ -98,6 +98,10 @@ h2{font-size:24px;font-weight:600}
 .tasks em{display:block;font-style:normal;color:var(--muted);font-size:12.5px;line-height:1.4;margin-top:1px}
 .tasks input:checked + span strong{font-weight:500}
 .tasks input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tasks.compact{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px 10px}
+.tasks.compact label{font-size:13px}
+.tasks.compact em{display:inline;color:var(--muted);font-size:11.5px;margin-left:4px}
+.hint{margin:0;font-size:12.5px;color:var(--muted);font-style:italic}
 .done{margin-top:auto;padding:10px 12px;border-radius:7px;background:var(--soft);font-size:13.5px}
 .done b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;font-weight:500}
 .sub{border:1px dashed var(--line);border-radius:8px;padding:10px 12px;font-size:13.5px}
@@ -165,6 +169,9 @@ footer{font-size:12.5px;color:var(--muted)}
 .area-panel li.pop b{color:var(--accent);font-weight:600}
 .area-panel .depois{border-left:3px solid var(--accent);padding-left:12px;font-size:13.5px;color:var(--muted)}
 .area-panel .depois b{color:var(--ink);font-weight:600}
+.area-panel .audit{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:13.5px}
+.area-panel .audit b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;font-weight:500}
+.area-panel .audit ul{margin:0;padding-left:18px;gap:4px}
 </style>
 
 <div class="wrap">
@@ -226,21 +233,22 @@ footer{font-size:12.5px;color:var(--muted)}
     <article class="phase p0">
       <div class="ph-top"><span class="ph-tag">Fase 0</span><h3>Descoberta</h3><span class="ph-when">Semanas 1 a 4 · 01/10 a 28/10</span></div>
       <div class="ph-body">
-        <ul class="tasks">
-          <li><label><input type="checkbox" data-k="a1"><span><strong>Comercial — mapear vendas, clientes e regras</strong><em>Pedidos, clientes, grade, metas, exclusividade, CNAE do atacado. Criar POPs de cadastro de cliente e lançamento de pedido. Dias 1 a 3.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a2"><span><strong>Estoque — mapear saldo e movimentação</strong><em>Saldo por SKU/grade, entradas, saídas, inventário, avarias. Criar POPs de contagem, movimentação e avaria. Dias 4 e 5.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a3"><span><strong>Produção — mapear ordens e custo</strong><em>Ordens de produção, etapas, custo padrão x real, refugo. Criar POPs de abertura de ordem e apontamento. Dias 6 e 7.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a4"><span><strong>Fiscal — mapear emissão de NF</strong><em>De onde saem as NFs e como se ligam ao pedido. Criar POP de emissão e cancelamento. Dia 8.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a5"><span><strong>Financeiro — mapear contas e DRE</strong><em>Contas a receber/pagar, fluxo de caixa, comissões. Dia 9.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a6"><span><strong>Compras — mapear fornecedores e pedidos</strong><em>Cadastro de fornecedor, pedido de compra, prazos. Criar POPs de cadastro e conferência de recebimento. Dia 10.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a7"><span><strong>Produto e coleção — mapear ficha técnica e custo</strong><em>Ficha técnica, custo por peça, código de coleção. Criar POPs correspondentes. Dia 11.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a8"><span><strong>Logística — mapear expedição e frete</strong><em>Prazo de separação, custo de frete, atrasos. Criar POPs de expedição e de registro de atraso. Dia 12.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a9"><span><strong>Pós-venda — mapear devoluções</strong><em>Devoluções, trocas, motivo, reclamações. Criar POP de devolução/troca. Dia 13.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a10"><span><strong>RH — mapear headcount e horas</strong><em>Custo de mão de obra da produção, horas e absenteísmo. Dia 14.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a11"><span><strong>Marketing — mapear canais e origem do pedido</strong><em>Canais usados, investimento, rastreamento de origem. Criar POP de registro de campanha. Dia 15.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a12"><span><strong>Transversal — definir chaves e consolidar POPs</strong><em>SKU, nº do pedido, nº da NF, CPF/CNPJ, coleção, ordem de produção. Reunir todos os POPs e revisar com quem executa. Dia 16.</em></span></label></li>
-          <li><label><input type="checkbox" data-k="a13"><span><strong>Fechamento — dicionário de métricas e conferência final</strong><em>Fechar com a gestão, comparar o total do mês com o financeiro, resumir o que falta. Dia 17.</em></span></label></li>
+        <ul class="tasks compact">
+          <li><label><input type="checkbox" data-k="a1"><span><strong>Comercial</strong><em>Dias 1 a 3</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a2"><span><strong>Estoque</strong><em>Dias 4 e 5</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a3"><span><strong>Produção</strong><em>Dias 6 e 7</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a4"><span><strong>Fiscal</strong><em>Dia 8</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a5"><span><strong>Financeiro</strong><em>Dia 9</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a6"><span><strong>Compras</strong><em>Dia 10</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a7"><span><strong>Produto e coleção</strong><em>Dia 11</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a8"><span><strong>Logística</strong><em>Dia 12</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a9"><span><strong>Pós-venda</strong><em>Dia 13</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a10"><span><strong>RH</strong><em>Dia 14</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a11"><span><strong>Marketing</strong><em>Dia 15</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a12"><span><strong>Transversal</strong><em>Dia 16</em></span></label></li>
+          <li><label><input type="checkbox" data-k="a13"><span><strong>Fechamento</strong><em>Dia 17</em></span></label></li>
         </ul>
+        <p class="hint">Detalhe de cada área (o que fazer, POPs e auditoria) está no seletor de área, no topo da página.</p>
         <div class="sub"><b>Dicionário de métricas a decidir</b>
           <dl><dt>Faturamento</dt><dd>NF emitida ou pedido? Bruto ou líquido de devoluções?</dd>
           <dt>Venda</dt><dd>Data do pedido ou do faturamento?</dd>
@@ -401,7 +409,7 @@ footer{font-size:12.5px;color:var(--muted)}
       'Confirmar se existe API de WhatsApp para aviso de reposição de estoque.',
       'POP: cadastro de cliente (dados obrigatórios, varejo x atacado).',
       'POP: lançamento de pedido (o que preencher, desconto, cancelamento).'
-    ],depois:'Fase 1: entra no 1º relatório (top produtos e clientes). Fase 3: base do dashboard de vendas e faturamento — prioridade 1 — com filtro por vendedor e canal.'},
+    ],depois:'Fase 1: entra no 1º relatório (top produtos e clientes). Fase 3: base do dashboard de vendas e faturamento — prioridade 1 — com filtro por vendedor e canal.',auditoria:'Pegar 5 pedidos recentes (2 varejo, 2 atacado, 1 cancelado) e conferir se cliente, SKU/grade, desconto e forma de pagamento batem com a fonte. Testar o POP de cadastro com um cliente novo.'},
     estoque:{nome:'Estoque',quando:'Fase 0 · Semana 1 · dias 4 e 5 (06 e 07/10)',itens:[
       'Confirmar se o Wiki controla saldo por SKU e grade, ou só por produto.',
       'Levantar como são registradas entradas, saídas e transferências.',
@@ -410,7 +418,7 @@ footer{font-size:12.5px;color:var(--muted)}
       'POP: contagem de inventário (periodicidade, registro de divergência).',
       'POP: registro de entrada/saída/transferência (quem lança, com que documento).',
       'POP: registro de avaria (motivo padronizado, quem autoriza a baixa).'
-    ],depois:'Fase 1: entra no relatório de entradas e saídas. Fase 3: dashboard de estoque — saldo, giro e produtos parados, prioridade 2.'},
+    ],depois:'Fase 1: entra no relatório de entradas e saídas. Fase 3: dashboard de estoque — saldo, giro e produtos parados, prioridade 2.',auditoria:'Contar fisicamente 10 SKUs de categorias diferentes e comparar com o saldo do sistema. Abrir uma movimentação recente e confirmar se seguiu o POP (documento, responsável).'},
     producao:{nome:'Produção',quando:'Fase 0 · Semana 2 · dias 6 e 7 (08 e 09/10)',itens:[
       'Levantar como o Wiki registra ordens de produção (datas prevista e real).',
       'Mapear se há controle por etapa (corte, costura, acabamento).',
@@ -420,69 +428,69 @@ footer{font-size:12.5px;color:var(--muted)}
       'POP: abertura de ordem de produção.',
       'POP: apontamento por etapa (quem registra início/fim).',
       'POP: registro de refugo e retrabalho.'
-    ],depois:'Alimenta o custo por peça, base dos indicadores de moda (margem por produto, prioridade 5) e da comparação custo padrão x real.'},
+    ],depois:'Alimenta o custo por peça, base dos indicadores de moda (margem por produto, prioridade 5) e da comparação custo padrão x real.',auditoria:'Pegar uma ordem de produção fechada e conferir se o custo real bate com o registrado por etapa. Confirmar que um caso de refugo foi lançado com motivo padronizado.'},
     fiscal:{nome:'Fiscal',quando:'Fase 0 · Semana 2 · dia 8 (12/10)',itens:[
       'Confirmar se as NFs (venda, devolução, transferência) saem do Wiki ou de outro emissor.',
       'Levantar como a NF se liga ao número do pedido.',
       'Verificar se há registro de NFs canceladas.',
       'POP: emissão e cancelamento de NF.'
-    ],depois:'Fase 3: conciliação de NFs com vendas, prioridade 3 — mostra divergência e nota cancelada.'},
+    ],depois:'Fase 3: conciliação de NFs com vendas, prioridade 3 — mostra divergência e nota cancelada.',auditoria:'Escolher 5 NFs do mês, sendo 1 cancelada, e confirmar que todas aparecem ligadas ao pedido de origem, sem número fora de sequência.'},
     financeiro:{nome:'Financeiro',quando:'Fase 0 · Semana 2 · dia 9 (13/10)',itens:[
       'Levantar onde ficam contas a receber, a pagar e o fluxo de caixa.',
       'Confirmar se existe DRE e com que frequência é fechado.',
       'Mapear como as comissões são calculadas e registradas.',
       'Verificar formas de pagamento aceitas.',
       'POP: lançamento de contas a pagar/receber (centro de custo, categoria, prazo).'
-    ],depois:'Fase 2: conferência automática dos totais do dashboard contra o financeiro, toda semana. É a prova dos nove de todo o roadmap.'},
+    ],depois:'Fase 2: conferência automática dos totais do dashboard contra o financeiro, toda semana. É a prova dos nove de todo o roadmap.',auditoria:'Comparar o total de contas a receber do mês com o extrato ou relatório contábil. Recalcular manualmente uma comissão e conferir com o valor lançado.'},
     compras:{nome:'Compras',quando:'Fase 0 · Semana 2 · dia 10 (14/10)',itens:[
       'Levantar cadastro de fornecedores e histórico de preços.',
       'Mapear onde ficam os pedidos de compra e prazos de entrega.',
       'Verificar se há registro de qualidade do material recebido.',
       'POP: cadastro de fornecedor e pedido de compra.',
       'POP: conferência de recebimento (atraso ou problema de qualidade).'
-    ],depois:'Entra na base de custo (preço de fornecedor) usada nos indicadores de moda e na conferência de recebimento.'},
+    ],depois:'Entra na base de custo (preço de fornecedor) usada nos indicadores de moda e na conferência de recebimento.',auditoria:'Pegar 3 pedidos de compra recentes e confirmar prazo, preço e se a conferência de recebimento foi registrada conforme o POP.'},
     produto:{nome:'Produto e coleção',quando:'Fase 0 · Semana 3 · dia 11 (15/10)',itens:[
       'Levantar se existe ficha técnica por produto (tecido, consumo, aviamentos).',
       'Confirmar se o custo por peça está calculado em algum lugar.',
       'Mapear como as coleções são identificadas (código, temporada).',
       'POP: cadastro de ficha técnica.',
       'POP: criação de código de coleção/SKU.'
-    ],depois:'A ficha técnica e o código de coleção viram a base de SKU/grade usada em todos os relatórios de venda e estoque.'},
+    ],depois:'A ficha técnica e o código de coleção viram a base de SKU/grade usada em todos os relatórios de venda e estoque.',auditoria:'Abrir 5 fichas técnicas de produtos ativos e confirmar que consumo de tecido, aviamentos e custo por peça estão preenchidos.'},
     logistica:{nome:'Logística',quando:'Fase 0 · Semana 3 · dia 12 (16/10)',itens:[
       'Mapear como é registrado o prazo de separação e envio dos pedidos.',
       'Levantar custo de frete por pedido e por transportadora.',
       'Verificar se há registro de atrasos e extravios.',
       'POP: separação e expedição (checklist antes do envio).',
       'POP: registro de atraso/extravio.'
-    ],depois:'Custo de frete e atraso entram nos indicadores de moda e no relatório de pós-venda (prazo x reclamação).'},
+    ],depois:'Custo de frete e atraso entram nos indicadores de moda e no relatório de pós-venda (prazo x reclamação).',auditoria:'Pegar 5 pedidos expedidos na semana e conferir prazo de separação, transportadora, e se algum atraso foi registrado.'},
     posvenda:{nome:'Pós-venda',quando:'Fase 0 · Semana 3 · dia 13 (19/10)',itens:[
       'Confirmar onde ficam registradas devoluções e trocas, com motivo.',
       'Levantar se existe canal de reclamação ou avaliação do cliente.',
       'POP: registro de devolução/troca (motivo padronizado, quem autoriza).'
-    ],depois:'Fase 3: relatório de devoluções — taxa por produto, cliente e motivo, prioridade 4.'},
+    ],depois:'Fase 3: relatório de devoluções — taxa por produto, cliente e motivo, prioridade 4.',auditoria:'Pegar 5 devoluções do mês e confirmar que todas têm motivo padronizado (não texto livre) e autorização registrada.'},
     rh:{nome:'RH',quando:'Fase 0 · Semana 3 · dia 14 (20/10)',itens:[
       'Levantar headcount por setor e custo de mão de obra da produção.',
       'Verificar se há registro de horas trabalhadas e absenteísmo.',
       'POP: registro de ponto e ausência, se ainda não for automático.'
-    ],depois:'Custo de mão de obra entra no custo por peça, usado nos indicadores de moda (margem por produto).'},
+    ],depois:'Custo de mão de obra entra no custo por peça, usado nos indicadores de moda (margem por produto).',auditoria:'Comparar o headcount da produção lançado com a folha de pagamento do mês. Conferir se ausências recentes foram registradas.'},
     marketing:{nome:'Marketing',quando:'Fase 0 · Semana 3 · dia 15 (21/10)',itens:[
       'Listar os canais usados hoje (Meta, Google, e-commerce, redes sociais).',
       'Levantar acesso aos painéis de cada canal (investimento, cliques, leads).',
       'Verificar se o e-commerce rastreia a origem do pedido.',
       'Mapear como identificar, no pedido, de onde veio o cliente.',
       'POP: registro de campanha (nome padronizado, canal, investimento, datas).'
-    ],depois:'Canal e origem do pedido entram como filtro no dashboard de vendas (Fase 3) e ajudam a medir retorno por canal.'},
+    ],depois:'Canal e origem do pedido entram como filtro no dashboard de vendas (Fase 3) e ajudam a medir retorno por canal.',auditoria:'Escolher uma campanha ativa e confirmar que o investimento e o canal batem com o painel da plataforma (Meta/Google).'},
     transversal:{nome:'Transversal',quando:'Fase 0 · Semana 4 · dia 16 (22/10)',itens:[
       'Definir as chaves de ligação: SKU, nº do pedido, nº da NF, CPF/CNPJ, código de coleção, nº da ordem de produção.',
       'Para cada área, anotar: sistema de origem, responsável, se dá para exportar ou só consultar.',
       'Consolidar todos os POPs em um só lugar, com dono e data de revisão.',
       'Revisar os POPs com quem executa a tarefa antes de aprovar.'
-    ],depois:'Sem isso as demais áreas não se conectam: é o que liga pedido, estoque, produção e NF num único relatório nas Fases 1 a 3.'},
+    ],depois:'Sem isso as demais áreas não se conectam: é o que liga pedido, estoque, produção e NF num único relatório nas Fases 1 a 3.',auditoria:'Pegar um pedido específico e seguir a chave (SKU, nº do pedido, nº da NF) por todas as áreas, confirmando que a ligação não tem furo.'},
     fechamento:{nome:'Fechamento',quando:'Fase 0 · Semana 4 · dia 17 (23/10)',itens:[
       'Fechar o dicionário de métricas com a gestão (o que é venda, faturamento, devolução).',
       'Conferir o total de vendas do mês passado com o financeiro.',
       'Resumir o que foi mapeado, o que falta, e o que é sistema/automação (não coleta de dado) — reposição automática por WhatsApp, bloqueio de atacado por CNAE, bloqueio de revendedor por distância — para levar a quem decide o escopo.'
-    ],depois:'Fecha a Fase 0 e libera as Fases 1 a 3: sem o dicionário de métricas fechado, cada relatório usaria uma definição diferente de venda e faturamento.'}
+    ],depois:'Fecha a Fase 0 e libera as Fases 1 a 3: sem o dicionário de métricas fechado, cada relatório usaria uma definição diferente de venda e faturamento.',auditoria:'Recalcular o faturamento do mês na mão e comparar com o número fechado pelo financeiro — a diferença tem que ser explicável.'}
   };
   var chipsEl=document.getElementById('areaChips'),panelEl=document.getElementById('areaPanel'),openKey=null;
   Object.keys(AREAS).forEach(function(k){
@@ -500,6 +508,7 @@ footer{font-size:12.5px;color:var(--muted)}
     }).join('');
     panelEl.innerHTML='<div class="ap-top"><h3>'+a.nome+'</h3><span class="when">'+a.quando+'</span></div>'+
       '<ul>'+lis+'</ul>'+
+      '<div class="audit"><b>Auditoria — como conferir que foi feito certo</b>'+a.auditoria+'</div>'+
       '<div class="depois"><b>Nas fases seguintes:</b> '+a.depois+'</div>'+
       '<button type="button" class="close" id="areaClose">Fechar</button>';
     panelEl.className='area-panel open';
